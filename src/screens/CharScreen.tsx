@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ElementsStackParam } from '../RootNavigator';
 // src
@@ -7,8 +7,11 @@ import { ElementsStackParam } from '../RootNavigator';
 
 type Props = NativeStackScreenProps<ElementsStackParam, 'CharScreen'>;
 
-export const CharScreen = ({ route, navigation }: Props) => {
-  navigation.setOptions({ title: route.params.name });
+export function CharScreen({ route, navigation }: Props) {
+  useEffect(() => {
+    navigation.setOptions({ title: route.params.name });
+  }, [navigation, route.params.name]);
+
   console.log(route);
   return (
     <View style={styles.center}>
@@ -16,7 +19,7 @@ export const CharScreen = ({ route, navigation }: Props) => {
       <Text>ID: {route.params.id}</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   center: {
