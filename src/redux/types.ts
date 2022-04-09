@@ -1,10 +1,11 @@
-import { Selected } from '../interfaces';
+import { IRenderItem } from '../components/RenderItem';
 
 export enum ActionTypes {
   SET_DATA = 'SET_DATA',
   SET_LOADING = 'SET_LOADING',
   SET_ERROR = 'SET_ERROR',
-  SELECT_CHAR = 'SELECT_CHAR',
+  ADD_TO_FAV = 'ADD_TO_FAV',
+  REMOVE_FROM_FAV = 'REMOVE_FROM_FAV',
 }
 
 interface ISetData {
@@ -19,10 +20,13 @@ interface ISetError {
   type: ActionTypes.SET_ERROR;
   error: boolean;
 }
-
-interface ISelectChar {
-  type: ActionTypes.SELECT_CHAR;
-  selected: Selected;
+interface IAddToFav {
+  type: ActionTypes.ADD_TO_FAV;
+  favorites: IRenderItem;
+}
+interface IRemoveFromFav {
+  type: ActionTypes.REMOVE_FROM_FAV;
+  favorites: IRenderItem;
 }
 
-export type Action = ISetData | ISetError | ISetLoading | ISelectChar;
+export type Action = ISetData | ISetError | ISetLoading | IAddToFav | IRemoveFromFav;

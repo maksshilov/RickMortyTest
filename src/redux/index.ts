@@ -1,11 +1,23 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persistStore, persistReducer } from 'redux-persist';
+// src
 import { reducer } from './reducer';
+// BODY
 
-const store = createStore(reducer, applyMiddleware(thunk));
+const persistConfig = {
+  key: 'fav',
+  storage: AsyncStorage,
+  whitelist: ['favorites'],
+};
 
-export type RootState = ReturnType<typeof reducer>;
+const rootReducer = combineReducers({
+  reducer: persistReducer(persistConfig, reducer),
+});
+
+export const store = createStore(rootReducer, applyMiddleware(thunk));
+export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
-
-export default store;

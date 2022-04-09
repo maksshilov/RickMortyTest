@@ -1,19 +1,32 @@
 import React, { FC } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useAction } from '../hooks/useAction';
 // src
-import { windowWidth } from '../styles/vars';
-import { IRenderItem } from '../interfaces';
+import { colors, windowWidth } from '../styles/vars';
 // BODY
+
+export interface IRenderItem {
+  id: number;
+  name: string;
+  status: string;
+  image: string;
+  gender: string;
+  origin: string;
+  location: string;
+}
 
 type Props = {
   item: IRenderItem;
-  onPress: (id: number) => void;
+  onSelect: () => void;
+  isFavorite: boolean;
 };
 
-export const RenderItem: FC<Props> = ({ item, onPress }) => {
+export const RenderItem: FC<Props> = ({ item, onSelect, isFavorite }) => {
+  const { addToFav, removeFromFav } = useAction();
+
   return (
-    <TouchableOpacity onPress={() => onPress(item.id)}>
+    <TouchableOpacity onPress={() => onSelect()}>
       <View style={styles.wrapper} key={item.id}>
         <View style={styles.imgWrapper}>
           <Image source={{ uri: item.image }} resizeMode="cover" style={styles.img} />
@@ -26,8 +39,12 @@ export const RenderItem: FC<Props> = ({ item, onPress }) => {
               <Text style={styles.status}>{item.status}</Text>
             </View>
           </View>
-          <TouchableOpacity>
-            <MaterialCommunityIcons name="heart-outline" size={30} />
+          <TouchableOpacity onPress={isFavorite ? () => removeFromFav(item) : () => addToFav(item)}>
+            <MaterialCommunityIcons
+              name={isFavorite ? 'heart' : 'heart-outline'}
+              size={30}
+              color={isFavorite ? colors.brown : colors.grey}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -53,17 +70,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   name: {
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans-Bold',
     fontSize: 30,
   },
   statusBlock: {
     flexDirection: 'row',
   },
   statusBold: {
+    fontFamily: 'OpenSans-Bold',
     fontSize: 20,
-    fontWeight: 'bold',
   },
   status: {
+    fontFamily: 'OpenSans-Medium',
     fontSize: 20,
   },
   imgWrapper: {

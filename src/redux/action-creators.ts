@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 // components etc
 import { ActionTypes, Action } from './types';
 import RimApi from '../api/RimApi';
-import { Selected } from '../interfaces';
+import { IRenderItem } from '../components/RenderItem';
 // BODY
 
 const rimApi = new RimApi();
@@ -23,30 +23,28 @@ export const getAllChars = () => {
   };
 };
 
-export const getChar = (id: number) => {
+export const addToFav = (item: IRenderItem) => {
   return async (dispatch: Dispatch<Action>) => {
     try {
       dispatch({ type: ActionTypes.SET_LOADING, loading: true });
-
-      const response = await rimApi.getChar(id);
-      let selected = await response.json();
-
-      selected = selected.forEach(
-        (char: any): Selected => ({
-          name: char.name,
-          status: char.status,
-          photo: char.image,
-          gender: char.gender,
-          origin: char.origin.name,
-          location: char.location.name,
-        })
-      );
-
-      console.log(selected);
-
-      // dispatch({ type: ActionTypes.SELECT_CHAR, selected });
+      dispatch({ type: ActionTypes.ADD_TO_FAV, favorites: item });
       dispatch({ type: ActionTypes.SET_LOADING, loading: false });
     } catch (error) {
+      console.log('addToFav ERROR:', error);
+      dispatch({ type: ActionTypes.SET_LOADING, loading: false });
+      dispatch({ type: ActionTypes.SET_ERROR, error: true });
+    }
+  };
+};
+
+export const removeFromFav = (item: IRenderItem) => {
+  return async (dispatch: Dispatch<Action>) => {
+    try {
+      dispatch({ type: ActionTypes.SET_LOADING, loading: true });
+      dispatch({ type: ActionTypes.REMOVE_FROM_FAV, favorites: item });
+      dispatch({ type: ActionTypes.SET_LOADING, loading: false });
+    } catch (error) {
+      console.log('addToFav ERROR:', error);
       dispatch({ type: ActionTypes.SET_LOADING, loading: false });
       dispatch({ type: ActionTypes.SET_ERROR, error: true });
     }

@@ -3,9 +3,8 @@ import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, StyleSheet, FlatList } from 'react-native';
 // components etc
-import { RenderItem } from '../components/RenderItem';
+import { IRenderItem, RenderItem } from '../components/RenderItem';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { IRenderItem } from '../interfaces';
 import { RootStackParam } from '../RootNavigator';
 import { colors } from '../styles/vars';
 // BODY
@@ -13,20 +12,26 @@ import { colors } from '../styles/vars';
 type Props = NativeStackScreenProps<RootStackParam, 'BottomTabsStack'>;
 
 export const MainScreen = ({ navigation }: Props) => {
-  const { data } = useTypedSelector(store => store);
+  const { data, favorites } = useTypedSelector(store => store.reducer);
 
   let renderData = data.results!.map((char: any) => ({
     id: char.id,
     name: char.name,
     status: char.status,
     image: char.image,
+    gender: char.gender,
+    origin: char.origin.name,
+    location: char.location.name,
   }));
 
   const renderItem = ({ item }: { item: IRenderItem }) => {
+    const isFavorite = !!favorites.filter((favItem: any) => favItem.id === item.id).length;
+    console.log(`isFavorite ${item.id}?`, isFavorite);
     return (
       <RenderItem
         item={item}
-        onPress={id => navigation.navigate('ElementsStack', { screen: 'CharScreen', params: { name: item.name, id } })}
+        onSelect={() => navigation.navigate('ElementsStack', { screen: 'CharScreen', params: item })}
+        isFavorite={isFavorite}
       />
     );
   };

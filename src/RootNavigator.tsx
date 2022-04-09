@@ -34,14 +34,16 @@ const BottomTabsStackNavigator = () => {
         options={{
           tabBarLabel: 'Characters',
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="account-group" size={20} color={color} />,
+          tabBarLabelStyle: { fontFamily: 'OpenSans-Bold', fontSize: 13 },
         }}
       />
       <BottomTabsStack.Screen
         name="Favorites"
         component={FavScreen}
         options={{
-          tabBarLabel: 'Characters',
+          tabBarLabel: 'Favorites',
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="heart" size={20} color={color} />,
+          tabBarLabelStyle: { fontFamily: 'OpenSans-Bold', fontSize: 13 },
         }}
       />
     </BottomTabsStack.Navigator>
@@ -50,15 +52,24 @@ const BottomTabsStackNavigator = () => {
 
 export type ElementsStackParam = {
   CharScreen: {
-    name: string;
     id: number;
+    name: string;
+    status: string;
+    image: string;
+    gender: string;
+    origin: string;
+    location: string;
   };
 };
 const ElementsStack = createNativeStackNavigator<ElementsStackParam>();
 const ElementsStackNavigator = () => {
   return (
     <ElementsStack.Navigator>
-      <ElementsStack.Screen name="CharScreen" component={CharScreen} />
+      <ElementsStack.Screen
+        name="CharScreen"
+        component={CharScreen}
+        options={{ headerTitleStyle: { fontFamily: 'OpenSans-Bold' } }}
+      />
     </ElementsStack.Navigator>
   );
 };
