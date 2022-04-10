@@ -52,13 +52,16 @@ const BottomTabsStackNavigator = () => {
 
 export type ElementsStackParam = {
   CharScreen: {
-    id: number;
-    name: string;
-    status: string;
-    image: string;
-    gender: string;
-    origin: string;
-    location: string;
+    item: {
+      id: number;
+      name: string;
+      status: string;
+      image: string;
+      gender: string;
+      origin: string;
+      location: string;
+    };
+    isFavorite?: boolean;
   };
 };
 const ElementsStack = createNativeStackNavigator<ElementsStackParam>();

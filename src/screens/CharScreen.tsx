@@ -1,23 +1,44 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Image, ScrollView } from 'react-native';
-import { InfoCard } from '../components/InfoCard';
-import { ElementsStackParam } from '../RootNavigator';
-import { windowWidth } from '../styles/vars';
+import { View, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // src
+import { InfoCard } from '../components/InfoCard';
+import { useAction } from '../hooks/useAction';
+import { useTypedSelector } from '../hooks/useTypedSelector';
+import { ElementsStackParam } from '../RootNavigator';
+import { colors, windowWidth } from '../styles/vars';
 // BODY
 
 type Props = NativeStackScreenProps<ElementsStackParam, 'CharScreen'>;
 
 export function CharScreen({ route, navigation }: Props) {
-  const { name, gender, status, origin, location, image } = route.params;
+  const { addToFav, removeFromFav } = useAction();
+
+  const { name, gender, status, origin, location, image } = route.params.item;
+  const { item } = route.params;
+
+  const { favorites } = useTypedSelector(store => store.reducer);
+  const isFavorite = !!favorites.filter((favItem: any) => favItem.id === item.id).length;
+
+  console.log(route.params);
 
   useEffect(() => navigation.setOptions({ title: name }), [navigation, name]);
 
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.center}>
-        <Image source={{ uri: image }} style={styles.img} />
+        <View style={styles.imgWrapper}>
+          <Image source={{ uri: image }} style={styles.img} />
+          <TouchableOpacity onPress={isFavorite ? () => removeFromFav(item) : () => addToFav(item)}>
+            <MaterialCommunityIcons
+              style={styles.icon}
+              name={isFavorite ? 'heart' : 'heart-outline'}
+              size={50}
+              color={isFavorite ? colors.brown : colors.grey}
+            />
+          </TouchableOpacity>
+        </View>
         <View style={{ height: windowWidth * 0.05 }} />
         <InfoCard attr={'Name'} value={name} />
         <InfoCard attr={'Status'} value={status} />
@@ -38,8 +59,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  imgWrapper: {
+    position: 'relative',
+  },
   img: {
     width: windowWidth,
     height: windowWidth,
+  },
+  icon: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
   },
 });

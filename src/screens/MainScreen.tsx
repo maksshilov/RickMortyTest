@@ -29,7 +29,7 @@ export const MainScreen = ({ navigation }: Props) => {
     return (
       <RenderItem
         item={item}
-        onSelect={() => navigation.navigate('ElementsStack', { screen: 'CharScreen', params: item })}
+        onSelect={() => navigation.navigate('ElementsStack', { screen: 'CharScreen', params: { item } })}
         isFavorite={isFavorite}
       />
     );

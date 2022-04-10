@@ -17,7 +17,7 @@ export const FavScreen = ({ navigation }: Props) => {
     return (
       <TouchableOpacity
         style={styles.wrapper}
-        onPress={() => navigation.navigate('ElementsStack', { screen: 'CharScreen', params: item })}>
+        onPress={() => navigation.navigate('ElementsStack', { screen: 'CharScreen', params: { item } })}>
         <View key={item.id} style={styles.imgWrapper}>
           <Image source={{ uri: item.image }} style={styles.img} resizeMode={'cover'} />
           <Text style={styles.name}>{item.name}</Text>
@@ -28,7 +28,11 @@ export const FavScreen = ({ navigation }: Props) => {
 
   return (
     <View style={styles.center}>
-      <FlatList data={favorites} renderItem={renderItem} numColumns={2} />
+      {favorites.length ? (
+        <FlatList data={favorites} renderItem={renderItem} numColumns={2} />
+      ) : (
+        <Text style={styles.emptyText}>No Favorites yet.{'\n'}Let's add someone :)</Text>
+      )}
     </View>
   );
 };
@@ -36,18 +40,18 @@ export const FavScreen = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   center: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
   wrapper: {
-    width: windowWidth * 0.45,
-    height: windowWidth * 0.55,
-    margin: windowWidth * 0.02,
+    width: windowWidth * 0.5,
+    height: windowWidth * 0.68,
+    padding: windowWidth * 0.02,
   },
   imgWrapper: {
     width: '100%',
-    height: windowWidth * 0.45,
+    height: windowWidth * 0.5,
   },
   img: {
     width: '100%',
@@ -57,5 +61,10 @@ const styles = StyleSheet.create({
     margin: 10,
     fontFamily: 'OpenSans-Bold',
     fontSize: 15,
+  },
+  emptyText: {
+    textAlign: 'center',
+    fontFamily: 'OpenSans-Bold',
+    fontSize: 20,
   },
 });
