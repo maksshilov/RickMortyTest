@@ -2,6 +2,7 @@ import { IRenderItem } from '../components/RenderItem';
 
 export enum ActionTypes {
   SET_DATA = 'SET_DATA',
+  NEXT_PAGE = 'NEXT_PAGE',
   SET_LOADING = 'SET_LOADING',
   SET_ERROR = 'SET_ERROR',
   ADD_TO_FAV = 'ADD_TO_FAV',
@@ -11,6 +12,10 @@ export enum ActionTypes {
 interface ISetData {
   type: ActionTypes.SET_DATA;
   data: any[];
+}
+interface INextPage {
+  type: ActionTypes.NEXT_PAGE;
+  data: { results: any[] };
 }
 interface ISetLoading {
   type: ActionTypes.SET_LOADING;
@@ -29,4 +34,4 @@ interface IRemoveFromFav {
   favorites: IRenderItem;
 }
 
-export type Action = ISetData | ISetError | ISetLoading | IAddToFav | IRemoveFromFav;
+export type Action = ISetData | INextPage | ISetError | ISetLoading | IAddToFav | IRemoveFromFav;

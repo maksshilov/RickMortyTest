@@ -1,6 +1,7 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // src
 import { InfoCard } from '../components/InfoCard';
@@ -21,15 +22,13 @@ export function CharScreen({ route, navigation }: Props) {
   const { favorites } = useTypedSelector(store => store.reducer);
   const isFavorite = !!favorites.filter((favItem: any) => favItem.id === item.id).length;
 
-  console.log(route.params);
-
   useEffect(() => navigation.setOptions({ title: name }), [navigation, name]);
 
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       <View style={styles.center}>
         <View style={styles.imgWrapper}>
-          <Image source={{ uri: image }} style={styles.img} />
+          <FastImage source={{ uri: image }} style={styles.img} />
           <TouchableOpacity onPress={isFavorite ? () => removeFromFav(item) : () => addToFav(item)}>
             <MaterialCommunityIcons
               style={styles.icon}

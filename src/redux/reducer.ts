@@ -12,14 +12,14 @@ export type Selected = {
 interface IState {
   loading: boolean;
   error: boolean;
-  data: any;
+  data: { info: any; results: any[] } | any;
   favorites?: any;
 }
 
 const initialState: IState = {
   loading: false,
   error: false,
-  data: { results: [] },
+  data: { info: {}, results: [] },
   favorites: [],
 };
 
@@ -27,6 +27,11 @@ export const reducer = (state = initialState, action: Action): IState => {
   switch (action.type) {
     case ActionTypes.SET_DATA:
       return { ...state, data: action.data };
+    case ActionTypes.NEXT_PAGE:
+      return {
+        ...state,
+        data: { ...state.data, ...action.data, results: [...state.data.results, ...action.data.results] },
+      };
     case ActionTypes.SET_LOADING:
       return { ...state, loading: action.loading };
     case ActionTypes.SET_ERROR:

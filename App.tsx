@@ -9,7 +9,7 @@ import { Loader } from './src/components/Loader';
 import { Error } from './src/components/Error';
 
 const App: React.FC = () => {
-  const { loading, error } = useTypedSelector(store => store.reducer);
+  const { loading, error, data } = useTypedSelector(store => store.reducer);
   const { getAllChars } = useAction();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const App: React.FC = () => {
   return (
     <>
       <StatusBar backgroundColor={'#fff'} />
-      {loading ? (
+      {loading && !data.results.length ? (
         <Loader />
       ) : error ? (
         <Error />

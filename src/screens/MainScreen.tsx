@@ -7,12 +7,15 @@ import { IRenderItem, RenderItem } from '../components/RenderItem';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { RootStackParam } from '../RootNavigator';
 import { colors } from '../styles/vars';
+import { useAction } from '../hooks/useAction';
+import { Loader } from '../components/Loader';
 // BODY
 
 type Props = NativeStackScreenProps<RootStackParam, 'BottomTabsStack'>;
 
 export const MainScreen = ({ navigation }: Props) => {
-  const { data, favorites } = useTypedSelector(store => store.reducer);
+  const { data, favorites, loading } = useTypedSelector(store => store.reducer);
+  const { nextPage } = useAction();
 
   let renderData = data.results!.map((char: any) => ({
     id: char.id,
@@ -37,7 +40,15 @@ export const MainScreen = ({ navigation }: Props) => {
 
   return (
     <View style={styles.center}>
-      <FlatList data={renderData} renderItem={renderItem} onEndReachedThreshold={0.5} onEndReached={() => {}} />
+      <FlatList
+        data={renderData}
+        renderItem={renderItem}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={loading ? <Loader /> : null}
+        onEndReached={() => {
+          nextPage(data.info.next);
+        }}
+      />
     </View>
   );
 };

@@ -23,6 +23,22 @@ export const getAllChars = () => {
   };
 };
 
+export const nextPage = (uri: string) => {
+  return async (dispatch: Dispatch<Action>) => {
+    try {
+      dispatch({ type: ActionTypes.SET_LOADING, loading: true });
+      const response = await rimApi.getNextPage(uri);
+      const data = await response.json();
+
+      dispatch({ type: ActionTypes.NEXT_PAGE, data });
+      dispatch({ type: ActionTypes.SET_LOADING, loading: false });
+    } catch (error) {
+      dispatch({ type: ActionTypes.SET_LOADING, loading: false });
+      dispatch({ type: ActionTypes.SET_ERROR, error: true });
+    }
+  };
+};
+
 export const addToFav = (item: IRenderItem) => {
   return async (dispatch: Dispatch<Action>) => {
     try {

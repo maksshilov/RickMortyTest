@@ -1,8 +1,9 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
-import { View, FlatList, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import { IRenderItem } from '../components/RenderItem';
+import { View, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import FastImage from 'react-native-fast-image';
 // src
+import { IRenderItem } from '../components/RenderItem';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { RootStackParam } from '../RootNavigator';
 import { windowWidth } from '../styles/vars';
@@ -19,7 +20,7 @@ export const FavScreen = ({ navigation }: Props) => {
         style={styles.wrapper}
         onPress={() => navigation.navigate('ElementsStack', { screen: 'CharScreen', params: { item } })}>
         <View key={item.id} style={styles.imgWrapper}>
-          <Image source={{ uri: item.image }} style={styles.img} resizeMode={'cover'} />
+          <FastImage source={{ uri: item.image }} style={styles.img} resizeMode={'cover'} />
           <Text style={styles.name}>{item.name}</Text>
         </View>
       </TouchableOpacity>

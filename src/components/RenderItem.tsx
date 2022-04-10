@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // src
 import { useAction } from '../hooks/useAction';
@@ -29,7 +30,7 @@ export const RenderItem: FC<Props> = ({ item, onSelect, isFavorite }) => {
     <TouchableOpacity onPress={() => onSelect()}>
       <View style={styles.wrapper} key={item.id}>
         <View style={styles.imgWrapper}>
-          <Image source={{ uri: item.image }} resizeMode="cover" style={styles.img} />
+          <FastImage source={{ uri: item.image }} resizeMode="cover" style={styles.img} />
         </View>
         <View style={styles.infoWrapper}>
           <View>
