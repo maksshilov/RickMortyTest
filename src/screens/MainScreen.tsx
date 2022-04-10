@@ -2,7 +2,7 @@
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, StyleSheet, FlatList } from 'react-native';
-// components etc
+// src
 import { IRenderItem, RenderItem } from '../components/RenderItem';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { RootStackParam } from '../RootNavigator';
@@ -15,7 +15,7 @@ type Props = NativeStackScreenProps<RootStackParam, 'BottomTabsStack'>;
 
 export const MainScreen = ({ navigation }: Props) => {
   const { data, favorites, loading } = useTypedSelector(store => store.reducer);
-  const { nextPage } = useAction();
+  const { nextPage, addToFav, removeFromFav } = useAction();
 
   let renderData = data.results!.map((char: any) => ({
     id: char.id,
@@ -34,6 +34,8 @@ export const MainScreen = ({ navigation }: Props) => {
         item={item}
         onSelect={() => navigation.navigate('ElementsStack', { screen: 'CharScreen', params: { item } })}
         isFavorite={isFavorite}
+        addToFav={addToFav}
+        removeFromFav={removeFromFav}
       />
     );
   };
@@ -43,8 +45,9 @@ export const MainScreen = ({ navigation }: Props) => {
       <FlatList
         data={renderData}
         renderItem={renderItem}
-        onEndReachedThreshold={0.5}
+        keyExtractor={item => item.id.toString()}
         ListFooterComponent={loading ? <Loader /> : null}
+        onEndReachedThreshold={0.5}
         onEndReached={() => {
           nextPage(data.info.next);
         }}
@@ -66,4 +69,3 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-2;

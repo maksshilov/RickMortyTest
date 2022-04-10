@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // src

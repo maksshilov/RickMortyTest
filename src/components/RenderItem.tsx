@@ -1,9 +1,8 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // src
-import { useAction } from '../hooks/useAction';
 import { colors, windowWidth } from '../styles/vars';
 // BODY
 
@@ -21,11 +20,11 @@ type Props = {
   item: IRenderItem;
   onSelect: () => void;
   isFavorite: boolean;
+  addToFav: (item: IRenderItem) => void;
+  removeFromFav: (item: IRenderItem) => void;
 };
 
-export const RenderItem: FC<Props> = ({ item, onSelect, isFavorite }) => {
-  const { addToFav, removeFromFav } = useAction();
-
+export const RenderItem = ({ item, onSelect, isFavorite, addToFav, removeFromFav }: Props) => {
   return (
     <TouchableOpacity onPress={() => onSelect()}>
       <View style={styles.wrapper} key={item.id}>

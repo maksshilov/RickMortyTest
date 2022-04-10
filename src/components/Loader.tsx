@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-// components etc
+// src
 import { colors } from '../styles/vars';
+// BODY
 
 export const Loader: FC = () => (
   <View style={styles.center}>

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 // components etc
-import { ActionTypes, Action } from './types';
 import RimApi from '../api/RimApi';
+import { ActionTypes, Action } from './types';
 import { IRenderItem } from '../components/RenderItem';
 // BODY
 

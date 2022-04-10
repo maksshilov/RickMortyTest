@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-// components etc
+// src
 import { useAction } from '../hooks/useAction';
 import { colors } from '../styles/vars';
+// BODY
 
 export const Error: FC = () => {
   const { getAllChars } = useAction();

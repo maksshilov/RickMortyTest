@@ -1,5 +1,7 @@
+import Config from 'react-native-config';
+
 export default class RimApi {
-  _apiBase = 'https://rickandmortyapi.com/api/';
+  _apiBase = Config.API_BASE;
 
   getAllChars = async (): Promise<any> => {
     return await fetch(`${this._apiBase}character`);

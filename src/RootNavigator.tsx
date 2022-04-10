@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// components etc
+// src
 import { MainScreen } from './screens/MainScreen';
 import { FavScreen } from './screens/FavScreen';
 import { CharScreen } from './screens/CharScreen';
