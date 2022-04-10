@@ -26,7 +26,6 @@ export const MainScreen = ({ navigation }: Props) => {
 
   const renderItem = ({ item }: { item: IRenderItem }) => {
     const isFavorite = !!favorites.filter((favItem: any) => favItem.id === item.id).length;
-    console.log(`isFavorite ${item.id}?`, isFavorite);
     return (
       <RenderItem
         item={item}
@@ -38,7 +37,7 @@ export const MainScreen = ({ navigation }: Props) => {
 
   return (
     <View style={styles.center}>
-      <FlatList data={renderData} renderItem={renderItem} />
+      <FlatList data={renderData} renderItem={renderItem} onEndReachedThreshold={0.5} onEndReached={() => {}} />
     </View>
   );
 };
